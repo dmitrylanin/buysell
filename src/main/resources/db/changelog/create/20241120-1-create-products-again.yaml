@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20241120-1-create-products-again
+      author: Fraiman
+      changes:
+        - createSequence:
+            sequenceName: hibernate_sequence_for_products
+            incrementBy: 1
+            maxValue: 9223372036854775807
+            minValue: 1
+            startValue: 3
+            cacheSize: 1
+            cycle: false
+
+  - changeSet:
+      id: 20241120-2-create-products-again
+      author: Fraiman
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  defaultValueComputed: nextval('hibernate_sequence_for_products')
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(250)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: price
+                  type: float
+                  constraints:
+                    nullable: true
+              - column:
+                  name: city
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 20241120-4-create-products-again
+      author: Fraiman
+      changes:
+        - loadData:
+            columns:
+              - column:
+                  index: 1
+                  name: 'title'
+              - column:
+                  header: 'description'
+                  name: 'description'
+              - column:
+                  index: 3
+                  name: 'city'
+              - column:
+                  index: 4
+                  name: 'author'
+              - column:
+                  index: 5
+                  name: 'price'
+            tableName: products
+            separator: ';'
+            quotchar: "'"
+            file: 'db/changelog/db-fixtures/Goods.csv'
