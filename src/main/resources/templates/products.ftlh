@@ -19,6 +19,7 @@
     Цена: <input type="number" name="price"/><br><br>
     Город: <input type="text" name="city"/><br><br>
     Имя: <input type="text" name="author"/><br><br>
+    Производитель: <input type="text" name="producer"/><br><br>
     <input type="submit" value="Добавить товар"/>
 </form>
 </body>

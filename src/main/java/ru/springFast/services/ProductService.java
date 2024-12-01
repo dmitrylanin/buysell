@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ru.springFast.aspect.ToDBLog;
+import ru.springFast.dto.ProductDTO;
+import ru.springFast.models.Producer;
 import ru.springFast.models.Product;
+import ru.springFast.repositories.ProducerRepository;
 import ru.springFast.repositories.ProductRepository;
 
 import java.util.List;
@@ -19,6 +22,10 @@ public class ProductService {
 
     @Autowired
     private final ProductRepository productRepository;
+    @Autowired
+    private final ProducerRepository producerRepository;
+    @Autowired
+    private final ProductMapping productMapping;
 
     /*
         Моя собственная аннотация для аспектов
@@ -29,8 +36,24 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public void saveProduct(ProductDTO productDTO) {
+        Product product = productMapping.mapToProduct(productDTO);
+
+        if(producerRepository.existsByName(product.getProducer().getName())){
+            log.info("У товара бренд есть: " + product.getProducer().getName());
+            product.setProducer(producerRepository.findByName(product.getProducer().getName()));
+            productRepository.save(product);
+        }else{
+            if(product.getProducer() == null){
+                product.setProducer(null);
+                productRepository.save(product);
+            }else{
+                Producer producer = product.getProducer();
+                producerRepository.save(producer);
+                product.setProducer(producer);
+                productRepository.save(product);
+            }
+        }
     }
 
     public void deleteProduct(Long id) {

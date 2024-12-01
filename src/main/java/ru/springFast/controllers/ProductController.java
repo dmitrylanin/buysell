@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.springFast.models.Product;
+import ru.springFast.dto.ProductDTO;
 import ru.springFast.services.ProductService;
 
 @Slf4j
@@ -31,8 +31,13 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public String createProduct(Product product) {
-        productService.saveProduct(product);
+    public String createProduct(ProductDTO productDTO){
+        System.out.println("--- // ---");
+        System.out.println(productDTO.getProducer());
+        System.out.println("--- // ---");
+        log.info("Get new product: {}", productDTO);
+
+        productService.saveProduct(productDTO);
         return "redirect:/";
     }
 

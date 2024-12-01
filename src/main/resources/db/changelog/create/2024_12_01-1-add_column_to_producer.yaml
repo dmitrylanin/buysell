@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024_12_01-1-add_column_to_producer
+      author: Fraiman
+      changes:
+        - addColumn:
+            tableName: producers
+            columns:
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false

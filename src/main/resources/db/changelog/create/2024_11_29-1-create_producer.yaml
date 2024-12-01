@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20241120-1-create-products-again
+      author: Fraiman
+      changes:
+        - createTable:
+            tableName: producers
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: producer_id
+                  type: serial
+                  constraints:
+                    nullable: true
+                    foreignKeyName: producer_id
+                    references: producers(id)

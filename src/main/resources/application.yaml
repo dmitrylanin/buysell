@@ -18,5 +18,6 @@ spring:
     hibernate:
       ddl-auto: none
 
+
   liquibase:
     enabled: true

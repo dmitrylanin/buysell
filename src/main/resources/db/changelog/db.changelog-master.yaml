@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
       file: db/changelog/create/20241120-1-create-products-again.yaml
+  - include:
+      file: db/changelog/create/2024_11_29-1-create_producer.yaml
+  - include:
+      file: db/changelog/create/2024_12_01-1-add_column_to_producer.yaml
